@@ -6,11 +6,14 @@ import org.apache.pdfbox.text.PDFTextStripper;
 import java.io.IOException;
 
 public class pdfKelimeArama {
+    // ANSI escape kodları
+    private static final String ANSI_RED = "\u001B[31m";
+    private static final String ANSI_RESET = "\u001B[0m"; // Renk sıfırlama
+
     public static void pdfKelimeArama(String klasorYolu, String arananKelime) {
         File klasor = new File(klasorYolu);
         File[] pdfDosyalari = klasor.listFiles((dir, name) -> name.endsWith(".pdf"));
 
-        // PDF dosyası bulunup bulunmadığını kontrol et
         if (pdfDosyalari != null && pdfDosyalari.length > 0) {
             System.out.println("PDF dosyaları bulundu: " + pdfDosyalari.length + " adet.");
 
@@ -28,8 +31,9 @@ public class pdfKelimeArama {
 
                         String sayfaMetni = pdfTextStripper.getText(document);
                         if (sayfaMetni.contains(arananKelime)) {
-                            System.out.println("'" + arananKelime + "' kelimesi "
-                                    + pdfDosyasi.getName() + " dosyasında, sayfa " + i + " içinde bulundu.");
+                            // Kırmızı renkte çıktı
+                            System.out.println(ANSI_RED + "'" + arananKelime + "' kelimesi "
+                                    + pdfDosyasi.getName() + " dosyasında, sayfa " + i + " içinde bulundu." + ANSI_RESET);
                             kelimeBulundu = true; // Kelime bulundu
                         }
                     }
@@ -45,11 +49,5 @@ public class pdfKelimeArama {
         } else {
             System.out.println("Belirtilen klasörde PDF dosyası bulunamadı veya klasör yanlış.");
         }
-    }
-
-    public static void main(String[] args) {
-        String klasorYolu = "src/main/resources/RefundCreditsCard";  // PDF klasörünün yolu
-        String arananKelime = "-$22.59";    // Aranacak kelime
-        pdfKelimeArama(klasorYolu, arananKelime);
     }
 }
