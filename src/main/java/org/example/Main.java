@@ -5,7 +5,8 @@ package org.example;
 public class Main extends pdfKelimeArama{
     public static void main(String[] args) {
         String klasorYolu = "src/main/resources/RefundCreditsCard";  // PDF klasörünün yolu
-        String arananKelime = "-$342.30";    // Aranacak kelime
+        String standardKelime = "-$";
+        String arananKelime = standardKelime + "342.30";    // Aranacak kelime
         pdfKelimeArama(klasorYolu, arananKelime);
     }
 }
